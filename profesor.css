@@ -74,3 +74,27 @@ table th {
     background: #014F86;
     color: white;
 }
+
+/* Fondo exclusivo para la sección INICIO (sólo cuando #inicio tiene la clase visible) */
+#inicio {
+    position: relative; /* necesario para el pseudo-elemento */
+}
+
+#inicio.visible::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('siga.jpg'); /* coloca 'siga.jpg' en la misma carpeta que este CSS/HTML o ajusta la ruta */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.6; /* 60% de opacidad */
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Contenido de #inicio por encima del fondo */
+#inicio > * {
+    position: relative;
+    z-index: 1;
+}
