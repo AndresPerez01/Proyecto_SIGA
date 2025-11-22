@@ -90,8 +90,8 @@ body {
 
 /* Imagen del logo dentro del círculo (usa siga.jpg) */
 .logo-img {
-    width: 5.5rem; /* aumentado */
-    height: 5.5rem; /* aumentado */
+    width: 7.5rem; /* aumentado */
+    height: 7.5rem; /* aumentado */
     max-width: 100%;
     object-fit: contain;
     display: block;
