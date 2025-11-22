@@ -58,7 +58,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem;
+    padding: 1rem;
 }
 
 .login-form-container {
