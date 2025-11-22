@@ -71,6 +71,12 @@ body {
     pointer-events: auto;
 }
 
+/* Corregir: algunas reglas globales usan display:block !important; esto anula
+   el display:flex de #inicio. Forzamos flex solo para #inicio cuando esté visible. */
+#inicio.visible {
+    display: flex !important;
+}
+
 /* ------------------- TABLAS ------------------- */
 
 table {
