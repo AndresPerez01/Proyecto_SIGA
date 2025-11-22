@@ -87,6 +87,14 @@ body {
     color: white;
 }
 
+/* Imagen del logo dentro del círculo (usa siga.jpg) */
+.logo-img {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    display: block;
+}
+
 .form-title {
     font-size: 1.875rem;
     font-weight: bold;
