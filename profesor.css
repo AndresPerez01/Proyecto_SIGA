@@ -106,7 +106,7 @@ table th {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.2; /* 60% de opacidad */
+    opacity: 0.15; /* 60% de opacidad */
     z-index: 0;
     pointer-events: none; /* evita que la capa capture clicks */
 }
