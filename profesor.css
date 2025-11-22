@@ -100,8 +100,10 @@ table th {
     font-size: clamp(1rem, 2.2vw, 1.25rem); /* tamaño responsivo para el párrafo */
 }
 
-/* Pseudo-elemento para mostrar la imagen de fondo con opacidad sin afectar el contenido */
-#inicio::before {
+/* Pseudo-elemento para mostrar la imagen de fondo con opacidad sin afectar el contenido
+   Ahora solo se aplica cuando #inicio tiene la clase "visible", de modo que al cambiar
+   a otra sección la imagen desaparece. */
+#inicio.visible::before {
     content: "";
     position: absolute;
     inset: 0;
