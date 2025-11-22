@@ -5,6 +5,8 @@ body {
     background: #f0f2f5;
 }
 
+/* ------------------- SIDEBAR ------------------- */
+
 .sidebar {
     width: 230px;
     background: #002B5B;
@@ -14,9 +16,16 @@ body {
     position: fixed;
 }
 
-.sidebar h2 {
+.sidebar h2,
+.logo-container {
     text-align: center;
     margin-bottom: 40px;
+}
+
+.logo-img {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.4));
 }
 
 .sidebar ul {
@@ -42,6 +51,8 @@ body {
     background: #d9534f !important;
 }
 
+/* ------------------- CONTENIDO ------------------- */
+
 .contenido {
     margin-left: 260px;
     padding: 20px;
@@ -55,6 +66,8 @@ body {
 .visible {
     display: block;
 }
+
+/* ------------------- TABLAS ------------------- */
 
 table {
     width: 100%;
@@ -75,25 +88,52 @@ table th {
     color: white;
 }
 
-/* Fondo exclusivo para la sección INICIO (sólo cuando #inicio tiene la clase visible) */
+/* ------------------- SECCIÓN INICIO ------------------- */
+
 #inicio {
-    position: relative; /* necesario para el pseudo-elemento */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 40px);
+    position: relative;
+    overflow: hidden;
+    gap: 20px;
 }
 
+#inicio h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+}
+
+#inicio p {
+    margin: 0;
+    color: #555;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+}
+
+/* Imagen de fondo SOLO cuando #inicio está visible */
 #inicio.visible::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('siga.jpg'); /* coloca 'siga.jpg' en la misma carpeta que este CSS/HTML o ajusta la ruta */
+    background-image: url('siga.jpg'); /* Cambia por tu imagen */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.6; /* 60% de opacidad */
+    opacity: 0.15; /* Transparencia */
     z-index: 0;
     pointer-events: none;
 }
 
-/* Contenido de #inicio por encima del fondo */
+/* Cuando #inicio NO está visible → NO tener fondo */
+#inicio:not(.visible)::before {
+    content: none !important;
+}
+
+/* Asegurar que el texto quede encima */
 #inicio > * {
     position: relative;
     z-index: 1;
