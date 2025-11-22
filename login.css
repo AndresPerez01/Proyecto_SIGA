@@ -58,16 +58,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1rem; /* reducido para compactar la altura total */
 }
 
 .login-form-container {
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    padding: 2.5rem;
+    padding: 1.25rem; /* reducido para hacer el panel más compacto */
     width: 100%;
     max-width: 28rem;
+    max-height: 72vh; /* limita altura en pantallas pequeñas/medias */
+    overflow-y: auto; /* permite scroll interno si hay overflow */
 }
 
 .logo-container {
