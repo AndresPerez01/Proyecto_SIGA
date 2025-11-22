@@ -85,7 +85,7 @@ table th {
     min-height: calc(100vh - 40px); /* ocupa la altura disponible (ajusta si es necesario) */
     position: relative; /* necesario para el pseudo-elemento de fondo */
     overflow: hidden;
-    gap: 8px;
+    gap: 20px;
 }
 
 #inicio h1 {
