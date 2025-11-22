@@ -102,7 +102,7 @@ table th {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('logo.png'); /* <-- reemplaza 'fondo.jpg' por la ruta de tu imagen */
+    background-image: url('siga.png'); /* <-- reemplaza 'fondo.jpg' por la ruta de tu imagen */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
