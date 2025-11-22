@@ -97,15 +97,19 @@ table th {
 #inicio {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;   /* CENTRA vertical */
+    align-items: center;       /* CENTRA horizontal */
     text-align: center;
-    min-height: calc(100vh - 40px);
+
+    height: calc(100vh - 40px); /* asegura altura completa */
     position: relative;
     overflow: hidden;
     gap: 20px;
+
+    z-index: 0; /* importante para evitar conflictos */
 }
 
+/* Títulos y párrafos centrados perfectamente */
 #inicio h1 {
     margin: 0;
     font-size: clamp(1.8rem, 4.5vw, 3.2rem);
@@ -118,26 +122,26 @@ table th {
     font-size: clamp(1rem, 2.2vw, 1.25rem);
 }
 
-/* Imagen de fondo SOLO cuando #inicio está visible */
+/* Fondo SOLO en Inicio */
 #inicio.visible::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('siga.jpg'); /* Cambia por tu imagen */
+    background-image: url('siga.jpg'); /* tu imagen */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.15; /* Transparencia */
+    opacity: 0.15;
     z-index: 0;
     pointer-events: none;
 }
 
-/* Cuando #inicio NO está visible → NO tener fondo */
+/* Cuando no está visible */
 #inicio:not(.visible)::before {
     content: none !important;
 }
 
-/* Asegurar que el texto quede encima */
+/* Mantener texto encima */
 #inicio > * {
     position: relative;
     z-index: 1;
