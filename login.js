@@ -54,8 +54,7 @@ function handleLogin() {
             window.location.href = 'director.html';
             break;
         case 'profesor':
-            alert('Interfaz de Profesor en desarrollo');
-            // window.location.href = 'profesor.html';
+            window.location.href = 'profesor.html';
             break;
         case 'estudiante':
             alert('Interfaz de Estudiante en desarrollo');
