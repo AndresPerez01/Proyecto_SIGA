@@ -77,20 +77,22 @@ body {
 }
 
 .logo-circle {
-    width: 5rem;
-    height: 5rem;
-    background-color: #2563eb;
-    border-radius: 50%;
+    /* Eliminar fondo circular y ajustar contenedor para que la imagen controle el tamaño */
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    padding: 0;
 }
 
 /* Imagen del logo dentro del círculo (usa siga.jpg) */
 .logo-img {
-    width: 3rem;
-    height: 3rem;
+    width: 4rem; /* aumentado */
+    height: 4rem; /* aumentado */
+    max-width: 100%;
     object-fit: contain;
     display: block;
 }
