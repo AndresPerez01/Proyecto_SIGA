@@ -60,11 +60,15 @@ body {
 }
 
 .seccion {
-    display: none;
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
-.visible {
-    display: block;
+.seccion.visible {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto;
 }
 
 /* ------------------- TABLAS ------------------- */
