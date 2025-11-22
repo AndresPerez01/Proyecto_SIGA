@@ -74,3 +74,46 @@ table th {
     background: #014F86;
     color: white;
 }
+
+/* Centrar el contenido de la sección INICIO (h1 + p) */
+#inicio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centra verticalmente dentro del área disponible */
+    align-items: center;     /* centra horizontalmente */
+    text-align: center;      /* centra el texto */
+    min-height: calc(100vh - 40px); /* ocupa la altura disponible (ajusta si es necesario) */
+    position: relative; /* necesario para el pseudo-elemento de fondo */
+    overflow: hidden;
+    gap: 8px;
+}
+
+#inicio h1 {
+    margin: 0;
+}
+
+#inicio p {
+    margin: 0;
+    color: #555;
+}
+
+/* Pseudo-elemento para mostrar la imagen de fondo con opacidad sin afectar el contenido */
+#inicio::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('logo.png'); /* <-- reemplaza 'fondo.jpg' por la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.6; /* 60% de opacidad */
+    z-index: 0;
+    pointer-events: none; /* evita que la capa capture clicks */
+}
+
+/* Aseguramos que el contenido de #inicio quede por encima de la imagen */
+#inicio > * {
+    position: relative;
+    z-index: 1;
+}
+
