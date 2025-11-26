@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: #f0f2f5;
+}
+
+/* ------------------- SIDEBAR ------------------- */
+.sidebar {
+    width: 230px;
+    background: #002B5B;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.sidebar h2,
+.logo-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-img {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.4));
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: #014F86;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.sidebar ul li:hover {
+    background: #0275d8;
+}
+
+/* Botones del menú */
+.menu button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: #014F86;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.menu button:hover {
+    background: #0275d8;
+}
+
+.logout {
+    margin-top: 50px;
+    background: #d9534f !important;
+}
+
+/* ------------------- CONTENIDO ------------------- */
+.contenido,
+.main {
+    margin-left: 260px;
+    padding: 20px;
+    width: 100%;
+}
+
+.seccion {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.seccion.visible {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+}
+
+/* Layout general */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ------------------- TOPBAR ------------------- */
+.topbar h2 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+/* ------------------- GRID Y CARDS ------------------- */
+.grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.stat {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.danger {
+    color: red;
+}
+
+/* ------------------- TABLAS ------------------- */
+.table-wrap {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background: #014F86;
+    color: white;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #e8eef3;
+}
+
+tr:hover td {
+    background: #f8fbff;
+}
+
+/* ------------------- INPUTS ------------------- */
+.input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #c9d5e2;
+    margin-bottom: 10px;
+}
+
+/* ------------------- OCULTO ------------------- */
+.hidden {
+    display: none;
+}
+
+/* ------------------- SECCIÓN INICIO ------------------- */
+#inicio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 40px);
+    position: relative;
+    overflow: hidden;
+    gap: 20px;
+    z-index: 0;
+}
+
+#inicio.visible {
+    display: flex !important;
+}
+
+#inicio h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+}
+
+#inicio p {
+    margin: 0;
+    color: #555;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+}
+
+/* Fondo SOLO en Inicio */
+#inicio.visible::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('siga.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#inicio:not(.visible)::before {
+    content: none !important;
+}
+
+#inicio > * {
+    position: relative;
+    z-index: 1;
+}

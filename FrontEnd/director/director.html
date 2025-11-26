@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGA - Director Académico</title>
+    <link rel="stylesheet" href="director.css">
+</head>
+<body>
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <img src="siga.jpg" alt="SIGA" class="logo-img">
+        </div>
+        <ul>
+            <li onclick="mostrar('inicio')">Inicio</li>
+            <li onclick="mostrar('reportes')">Reportes Consolidados</li>
+            <li onclick="mostrar('calificaciones')">Calificaciones</li>
+            <li onclick="mostrar('asistencia')">Asistencia</li>
+            <li onclick="mostrar('observaciones')">Observaciones</li>
+            <li onclick="mostrar('alertas')">Alertas</li>
+            <li onclick="mostrar('perfil')">Mi Perfil</li>
+            <li id="logoutBtn" class="logout">Cerrar Sesión</li>
+        </ul>
+    </aside>
+
+    <!-- Contenido -->
+    <main class="contenido">
+        <!-- INICIO -->
+        <section id="inicio" class="seccion visible">
+            <h1>Bienvenido Director Académico</h1>
+            <p>Panel de control y supervisión académica</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Total Estudiantes</h3>
+                    <div id="totalEstudiantes" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Promedio General</h3>
+                    <div id="promedioGeneral" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Asistencia Promedio</h3>
+                    <div id="asistenciaPromedio" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Alertas Activas</h3>
+                    <div id="alertasActivas" class="stat danger">--</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORTES CONSOLIDADOS -->
+        <section id="reportes" class="seccion">
+            <h1>Reportes Consolidados</h1>
+            
+            <div class="filtros-container">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="filtros-grid">
+                    <select id="filterPeriodo" class="input">
+                        <option value="">Todos los periodos</option>
+                    </select>
+                    <select id="filterCarrera" class="input">
+                        <option value="">Todas las carreras</option>
+                    </select>
+                    <select id="filterDocente" class="input">
+                        <option value="">Todos los docentes</option>
+                    </select>
+                    <select id="filterMateria" class="input">
+                        <option value="">Todas las materias</option>
+                    </select>
+                </div>
+                <button onclick="aplicarFiltros()">Aplicar Filtros</button>
+                <button onclick="limpiarFiltros()">Limpiar Filtros</button>
+            </div>
+
+            <div class="export-container">
+                <h3>Exportar Reportes</h3>
+                <button onclick="exportarPDF()">Exportar PDF</button>
+                <button onclick="exportarExcel()">Exportar Excel</button>
+            </div>
+
+            <div id="reporteResumen"></div>
+        </section>
+
+        <!-- CALIFICACIONES -->
+        <section id="calificaciones" class="seccion">
+            <h1>Calificaciones por Carrera/Materia</h1>
+            
+            <select id="selectCarreraCalif" class="input">
+                <option value="">Seleccione una carrera</option>
+            </select>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Docente</th>
+                        <th>Estudiantes</th>
+                        <th>Promedio</th>
+                        <th>Aprobados</th>
+                        <th>Reprobados</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCalificaciones"></tbody>
+            </table>
+        </section>
+
+        <!-- ASISTENCIA -->
+        <section id="asistencia" class="seccion">
+            <h1>Estadísticas de Asistencia</h1>
+            
+            <select id="selectPeriodoAsis" class="input">
+                <option value="">Seleccione un periodo</option>
+            </select>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Asistencia Global</h3>
+                    <div id="asistenciaGlobal" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Estudiantes con Bajo %</h3>
+                    <div id="estudiantesBajaAsis" class="stat danger">--</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Materia</th>
+                        <th>Presentes</th>
+                        <th>Ausentes</th>
+                        <th>Tardanzas</th>
+                        <th>% Asistencia</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaAsistencia"></tbody>
+            </table>
+        </section>
+
+        <!-- OBSERVACIONES -->
+        <section id="observaciones" class="seccion">
+            <h1>Observaciones Académicas y Conductuales</h1>
+            
+            <div class="filtros-obs">
+                <select id="selectTipoObs" class="input">
+                    <option value="">Todas</option>
+                    <option value="academica">Académicas</option>
+                    <option value="conductual">Conductuales</option>
+                </select>
+                <button onclick="cargarObservaciones()">Filtrar</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Estudiante</th>
+                        <th>Materia</th>
+                        <th>Docente</th>
+                        <th>Tipo</th>
+                        <th>Detalle</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaObservaciones"></tbody>
+            </table>
+        </section>
+
+        <!-- ALERTAS -->
+        <section id="alertas" class="seccion">
+            <h1>Alertas Automáticas</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Bajo Rendimiento</h3>
+                    <div id="alertasBajoRendimiento" class="stat danger">--</div>
+                </div>
+                <div class="card">
+                    <h3>Inasistencias Elevadas</h3>
+                    <div id="alertasInasistencias" class="stat danger">--</div>
+                </div>
+            </div>
+
+            <div class="alertas-container">
+                <h3>Estudiantes en Riesgo - Bajo Rendimiento (Promedio < 7.0)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Materia</th>
+                            <th>Promedio</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaBajoRendimiento"></tbody>
+                </table>
+
+                <h3>Estudiantes con Inasistencias Elevadas (< 80%)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Materia</th>
+                            <th>% Asistencia</th>
+                            <th>Faltas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaInasistencias"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PERFIL -->
+        <section id="perfil" class="seccion">
+            <h1>Mi Perfil</h1>
+            <p>Nombre: <strong id="perfilNombre"></strong></p>
+            <p>Correo: <strong id="perfilCorreo"></strong></p>
+            <p>Rol: <strong>Director Académico</strong></p>
+        </section>
+    </main>
+
+    <script src="director.js"></script>
+</body>
+</html>

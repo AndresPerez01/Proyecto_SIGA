@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGA - Estudiante</title>
+    <link rel="stylesheet" href="estudiante.css">
+</head>
+<body>
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <img src="SIGA.jpg" alt="SIGA" class="logo-img">
+        </div>
+        <ul>
+            <li onclick="mostrarSeccion('inicio')">Inicio</li>
+            <li onclick="mostrarSeccion('materias')">Mis Materias</li>
+            <li onclick="mostrarSeccion('inscripcion')">Inscripción Materias</li>
+            <li onclick="mostrarSeccion('calificaciones')">Calificaciones</li>
+            <li onclick="mostrarSeccion('asistencia')">Asistencia</li>
+            <li onclick="mostrarSeccion('observaciones')">Observaciones</li>
+            <li onclick="mostrarSeccion('perfil')">Mi Perfil</li>
+            <li id="logoutBtn" class="logout">Cerrar Sesión</li>
+        </ul>
+    </aside>
+
+    <!-- Contenido -->
+    <main class="contenido">
+        <!-- INICIO -->
+        <section id="inicio" class="seccion visible">
+            <h1>Bienvenido Estudiante</h1>
+            <p>Seleccione una opción del menú para comenzar.</p>
+        </section>
+
+        <!-- MATERIAS INSCRITAS -->
+        <section id="materias" class="seccion">
+            <h1>Mis Materias Inscritas</h1>
+            <table id="tablaMaterias">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Docente</th>
+                        <th>Tareas</th>
+                        <th>Trabajos Clase</th>
+                        <th>Proyecto</th>
+                        <th>Participación</th>
+                        <th>Pruebas</th>
+                        <th>Exámenes</th>
+                        <th>Promedio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- INSCRIPCIÓN DE MATERIAS -->
+        <section id="inscripcion" class="seccion">
+            <h1>Inscripción de Materias</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Materias Actuales</h3>
+                    <div id="materiasActuales" class="stat">0</div>
+                </div>
+                <div class="card">
+                    <h3>Materias Disponibles</h3>
+                    <div id="materiasDisponibles" class="stat">5</div>
+                </div>
+            </div>
+
+            <h3>Materias Disponibles para Inscripción</h3>
+            <table id="tablaMateriasDisponibles">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Código</th>
+                        <th>Créditos</th>
+                        <th>Docente</th>
+                        <th>Horario</th>
+                        <th>Cupos</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- CALIFICACIONES -->
+        <section id="calificaciones" class="seccion">
+            <h1>Mis Calificaciones</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Promedio General</h3>
+                    <div id="promedio" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Materias Aprobadas</h3>
+                    <div id="aprobadas" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Materias Pendientes</h3>
+                    <div id="pendientes" class="stat danger">--</div>
+                </div>
+            </div>
+
+            <input id="searchMat" class="input" placeholder="Buscar materia...">
+
+            <table id="tablaCalificaciones">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Docente</th>
+                        <th>Tareas</th>
+                        <th>Trabajos</th>
+                        <th>Proyecto</th>
+                        <th>Participación</th>
+                        <th>Pruebas</th>
+                        <th>Exámenes</th>
+                        <th>Promedio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- ASISTENCIA -->
+        <section id="asistencia" class="seccion">
+            <h1>Mi Asistencia</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Porcentaje de Asistencia</h3>
+                    <div id="porcentajeAsistencia" class="stat">--</div>
+                </div>
+                <div class="card">
+                    <h3>Faltas Totales</h3>
+                    <div id="faltasTotales" class="stat danger">--</div>
+                </div>
+            </div>
+
+            <h3>Subir Justificativo</h3>
+            <input type="file" id="fileJusti" class="input">
+            <input type="date" id="fechaJusti" class="input" placeholder="Fecha de falta">
+            <input type="text" id="motivoJusti" class="input" placeholder="Motivo del justificativo">
+            <button onclick="subirJustificativo()">Subir justificativo</button>
+            
+            <div id="uploadedFiles"></div>
+
+            <table id="tablaAsistencia">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Justificativo</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- OBSERVACIONES -->
+        <section id="observaciones" class="seccion">
+            <h1>Mis Observaciones</h1>
+            
+            <div class="card">
+                <h3>Total de Observaciones</h3>
+                <div id="obsCount" class="stat danger">--</div>
+            </div>
+
+            <ul id="obsList"></ul>
+        </section>
+
+        <!-- PERFIL -->
+        <section id="perfil" class="seccion">
+            <h1>Mi Perfil</h1>
+            <p>Nombre: <strong id="perfilNombre"></strong></p>
+            <p>Correo: <strong id="perfilCorreo"></strong></p>
+            <p>Rol: <strong>Estudiante</strong></p>
+        </section>
+    </main>
+
+    <script src="estudiante.js"></script>
+</body>
+</html>
