@@ -14,7 +14,9 @@
         </div>
         <ul>
             <li onclick="mostrar('inicio')">Inicio</li>
-            <li onclick="mostrar('reportes')">Reportes Consolidados</li>
+            <li onclick="mostrar('gestionProfesores')">Administrar Profesores</li>
+            <li onclick="mostrar('gestionEstudiantes')">Administrar Estudiantes</li>
+            <li onclick="mostrar('gestionMaterias')">Gestionar Materias</li>
             <li onclick="mostrar('calificaciones')">Calificaciones</li>
             <li onclick="mostrar('asistencia')">Asistencia</li>
             <li onclick="mostrar('observaciones')">Observaciones</li>
@@ -37,12 +39,12 @@
                     <div id="totalEstudiantes" class="stat">--</div>
                 </div>
                 <div class="card">
-                    <h3>Promedio General</h3>
-                    <div id="promedioGeneral" class="stat">--</div>
+                    <h3>Total Profesores</h3>
+                    <div id="totalProfesores" class="stat">--</div>
                 </div>
                 <div class="card">
-                    <h3>Asistencia Promedio</h3>
-                    <div id="asistenciaPromedio" class="stat">--</div>
+                    <h3>Promedio General</h3>
+                    <div id="promedioGeneral" class="stat">--</div>
                 </div>
                 <div class="card">
                     <h3>Alertas Activas</h3>
@@ -51,71 +53,320 @@
             </div>
         </section>
 
-        <!-- REPORTES CONSOLIDADOS -->
-        <section id="reportes" class="seccion">
-            <h1>Reportes Consolidados</h1>
+        <!-- GESTIÓN DE PROFESORES -->
+        <section id="gestionProfesores" class="seccion">
+            <h1>Administrar Profesores</h1>
             
+            <!-- Crear Nuevo Profesor -->
+            <div class="card-section">
+                <h3>Crear Nuevo Profesor</h3>
+                <div class="form-grid">
+                    <input type="text" id="profNombre" class="input" placeholder="Nombre">
+                    <input type="text" id="profApellido" class="input" placeholder="Apellido">
+                    <input type="email" id="profCorreo" class="input" placeholder="Correo electrónico">
+                    <input type="text" id="profTitulo" class="input" placeholder="Título académico">
+                    <input type="password" id="profContrasena" class="input" placeholder="Contraseña (mín. 8 caracteres)">
+                </div>
+                <button onclick="crearProfesor()">Crear Profesor</button>
+            </div>
+
+            <!-- Lista de Profesores -->
+            <div class="card-section">
+                <h3>Lista de Profesores</h3>
+                <input type="text" id="buscarProfesor" class="input" placeholder="Buscar profesor por nombre, apellido o correo..." onkeyup="buscarEnTablaProfesores()">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Título</th>
+                            <th>Estado</th>
+                            <th>Materias Asignadas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProfesores"></tbody>
+                </table>
+            </div>
+
+            <!-- Modal Asignar/Reasignar Materias -->
+            <div id="modalAsignarMateria" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalMateria()">&times;</span>
+                    <h3>Asignar Materias al Profesor</h3>
+                    <p id="nombreProfesorModal"></p>
+                    
+                    <select id="periodoAsignar" class="input" onchange="cargarAsignaturasDisponibles()">
+                        <option value="">Seleccione período académico</option>
+                    </select>
+                    
+                    <select id="asignaturaAsignar" class="input">
+                        <option value="">Seleccione asignatura</option>
+                    </select>
+                    
+                    <select id="cursoParaleloAsignar" class="input">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                    
+                    <input type="number" id="cupoMaximo" class="input" placeholder="Cupo máximo" value="30" min="1">
+                    <input type="text" id="aulaAsignar" class="input" placeholder="Aula (opcional)">
+                    
+                    <button onclick="asignarMateriaProfesor()">Asignar Materia</button>
+                    
+                    <h4>Materias Actualmente Asignadas</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Período</th>
+                                <th>Asignatura</th>
+                                <th>Curso-Paralelo</th>
+                                <th>Cupo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaMateriasProfesor"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- GESTIÓN DE ESTUDIANTES -->
+        <section id="gestionEstudiantes" class="seccion">
+            <h1>Administrar Estudiantes</h1>
+            
+            <!-- Crear Nuevo Estudiante -->
+            <div class="card-section">
+                <h3>Crear Nuevo Estudiante</h3>
+                <div class="form-grid">
+                    <input type="text" id="estNombre" class="input" placeholder="Nombre">
+                    <input type="text" id="estApellido" class="input" placeholder="Apellido">
+                    <input type="email" id="estCorreo" class="input" placeholder="Correo electrónico">
+                    <input type="password" id="estContrasena" class="input" placeholder="Contraseña (mín. 8 caracteres)">
+                    <select id="estPeriodo" class="input">
+                        <option value="">Seleccione período académico</option>
+                    </select>
+                    <select id="estCursoParalelo" class="input">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                </div>
+                <button onclick="crearEstudiante()">Crear Estudiante</button>
+            </div>
+
+            <!-- Filtros de Estudiantes -->
+            <div class="card-section">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="form-grid">
+                    <input type="text" id="buscarEstudiante" class="input" placeholder="Buscar por nombre, apellido o correo..." onkeyup="buscarEnTablaEstudiantes()">
+                    <select id="filtroEstPeriodo" class="input" onchange="cargarFiltroEstCursosParalelos()">
+                        <option value="">Todos los períodos</option>
+                    </select>
+                    <select id="filtroEstCursoParalelo" class="input" onchange="buscarEnTablaEstudiantes()">
+                        <option value="">Todos los cursos-paralelos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista de Estudiantes -->
+            <div class="card-section">
+                <h3>Lista de Estudiantes</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Período</th>
+                            <th>Curso-Paralelo</th>
+                            <th>Estado</th>
+                            <th>Fecha Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaEstudiantes"></tbody>
+                </table>
+            </div>
+
+            <!-- Modal Editar Estudiante -->
+            <div id="modalEditarEstudiante" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalEstudiante()">&times;</span>
+                    <h3>Editar Datos del Estudiante</h3>
+                    <input type="hidden" id="editEstId">
+                    
+                    <input type="text" id="editEstNombre" class="input" placeholder="Nombre">
+                    <input type="text" id="editEstApellido" class="input" placeholder="Apellido">
+                    <input type="email" id="editEstCorreo" class="input" placeholder="Correo electrónico">
+                    
+                    <button onclick="actualizarEstudiante()">Guardar Cambios</button>
+                    
+                    <h4>Matrículas del Estudiante</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Período</th>
+                                <th>Curso-Paralelo</th>
+                                <th>Total Materias</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaMatriculasEstudiante"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- GESTIÓN DE MATERIAS -->
+        <section id="gestionMaterias" class="seccion">
+            <h1>Gestionar Materias</h1>
+            
+            <!-- Crear Nueva Materia -->
+            <div class="card-section">
+                <h3>Ingresar Nueva Materia</h3>
+                <div class="form-grid">
+                    <input type="text" id="materiaNombre" class="input" placeholder="Nombre de la materia">
+                    <input type="text" id="materiaDescripcion" class="input" placeholder="Descripción">
+                    <input type="text" id="materiaArea" class="input" placeholder="Área (ej: Matemáticas)">
+                </div>
+                <button onclick="crearMateria()">Crear Materia</button>
+            </div>
+
+            <!-- Filtros de Materias -->
             <div class="filtros-container">
                 <h3>Filtros de Búsqueda</h3>
                 <div class="filtros-grid">
-                    <select id="filterPeriodo" class="input">
-                        <option value="">Todos los periodos</option>
+                    <select id="filterMatPeriodo" class="input" onchange="cargarCursosParalelosPorPeriodo()">
+                        <option value="">Seleccione período</option>
                     </select>
-                    <select id="filterCarrera" class="input">
-                        <option value="">Todas las carreras</option>
+                    <select id="filterMatCursoParalelo" class="input" onchange="cargarMateriasPorCursoParalelo()">
+                        <option value="">Seleccione curso-paralelo</option>
                     </select>
-                    <select id="filterDocente" class="input">
-                        <option value="">Todos los docentes</option>
-                    </select>
-                    <select id="filterMateria" class="input">
+                    <select id="filterMatAsignatura" class="input" onchange="aplicarFiltrosMaterias()">
                         <option value="">Todas las materias</option>
                     </select>
                 </div>
-                <button onclick="aplicarFiltros()">Aplicar Filtros</button>
-                <button onclick="limpiarFiltros()">Limpiar Filtros</button>
+                <button onclick="aplicarFiltrosMaterias()">Aplicar Filtros</button>
+                <button onclick="limpiarFiltrosMaterias()">Limpiar Filtros</button>
             </div>
 
-            <div class="export-container">
-                <h3>Exportar Reportes</h3>
-                <button onclick="exportarPDF()">Exportar PDF</button>
-                <button onclick="exportarExcel()">Exportar Excel</button>
+            <!-- Tabla de Materias -->
+            <div class="card-section">
+                <h3>Detalle de Materias</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Período</th>
+                            <th>Asignatura</th>
+                            <th>Curso-Paralelo</th>
+                            <th>Docente</th>
+                            <th>Estudiantes</th>
+                            <th>Promedio</th>
+                            <th>Aprobados</th>
+                            <th>Reprobados</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaDetalleMaterias"></tbody>
+                </table>
             </div>
 
-            <div id="reporteResumen"></div>
+            <!-- Modal Editar Materia -->
+            <div id="modalEditarMateria" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalEditarMateria()">&times;</span>
+                    <h3>Editar Datos de la Materia</h3>
+                    <input type="hidden" id="editMatId">
+                    
+                    <input type="text" id="editMatNombre" class="input" placeholder="Nombre">
+                    <input type="text" id="editMatDescripcion" class="input" placeholder="Descripción">
+                    <input type="text" id="editMatArea" class="input" placeholder="Área">
+                    
+                    <button onclick="actualizarMateria()">Guardar Cambios</button>
+                </div>
+            </div>
         </section>
 
         <!-- CALIFICACIONES -->
         <section id="calificaciones" class="seccion">
-            <h1>Calificaciones por Carrera/Materia</h1>
+            <h1>Calificaciones</h1>
             
-            <select id="selectCarreraCalif" class="input">
-                <option value="">Seleccione una carrera</option>
-            </select>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Materia</th>
-                        <th>Docente</th>
-                        <th>Estudiantes</th>
-                        <th>Promedio</th>
-                        <th>Aprobados</th>
-                        <th>Reprobados</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaCalificaciones"></tbody>
-            </table>
+            <div class="filtros-container">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="filtros-grid">
+                    <select id="selectPeriodoCalif" class="input" onchange="cargarCursosParalelosCalif()">
+                        <option value="">Seleccione período</option>
+                    </select>
+                    <select id="selectCursoParaleloCalif" class="input" onchange="cargarAsignaturasCalif()">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                    <select id="selectAsignaturaCalif" class="input" onchange="cargarCalificaciones()">
+                        <option value="">Seleccione asignatura</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-section">
+                <h3>Detalle de Calificaciones</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Tareas</th>
+                            <th>Trabajos</th>
+                            <th>Proyecto</th>
+                            <th>Participación</th>
+                            <th>Pruebas</th>
+                            <th>Exámenes</th>
+                            <th>Promedio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaDetalleCalificaciones"></tbody>
+                </table>
+            </div>
+
+            <!-- Modal Editar Calificación -->
+            <div id="modalEditarCalificacion" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalEditarCalificacion()">&times;</span>
+                    <h3>Editar Calificaciones</h3>
+                    <p id="nombreEstudianteCalif"></p>
+                    <input type="hidden" id="editCalifId">
+                    
+                    <div class="form-grid">
+                        <input type="number" id="editCalifTareas" class="input" placeholder="Tareas" step="0.01" min="0" max="10">
+                        <input type="number" id="editCalifTrabajos" class="input" placeholder="Trabajos" step="0.01" min="0" max="10">
+                        <input type="number" id="editCalifProyecto" class="input" placeholder="Proyecto" step="0.01" min="0" max="10">
+                        <input type="number" id="editCalifParticipacion" class="input" placeholder="Participación" step="0.01" min="0" max="10">
+                        <input type="number" id="editCalifPruebas" class="input" placeholder="Pruebas" step="0.01" min="0" max="10">
+                        <input type="number" id="editCalifExamenes" class="input" placeholder="Exámenes" step="0.01" min="0" max="10">
+                    </div>
+                    
+                    <button onclick="actualizarCalificacion()">Guardar Cambios</button>
+                </div>
+            </div>
         </section>
 
         <!-- ASISTENCIA -->
         <section id="asistencia" class="seccion">
             <h1>Estadísticas de Asistencia</h1>
             
-            <select id="selectPeriodoAsis" class="input">
-                <option value="">Seleccione un periodo</option>
-            </select>
-            
+            <div class="filtros-container">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="filtros-grid">
+                    <select id="selectPeriodoAsis" class="input" onchange="cargarCursosParalelosAsis()">
+                        <option value="">Seleccione período</option>
+                    </select>
+                    <select id="selectCursoParaleloAsis" class="input" onchange="cargarAsignaturasAsis()">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                    <select id="selectAsignaturaAsis" class="input" onchange="cargarAsistencia()">
+                        <option value="">Seleccione asignatura</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="grid">
                 <div class="card">
                     <h3>Asistencia Global</h3>
@@ -127,54 +378,129 @@
                 </div>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Estudiante</th>
-                        <th>Materia</th>
-                        <th>Presentes</th>
-                        <th>Ausentes</th>
-                        <th>Tardanzas</th>
-                        <th>% Asistencia</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaAsistencia"></tbody>
-            </table>
+            <div class="card-section">
+                <h3>Detalle de Asistencia</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Presentes</th>
+                            <th>Ausentes</th>
+                            <th>Tardanzas</th>
+                            <th>% Asistencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaAsistencia"></tbody>
+                </table>
+            </div>
+
+            <!-- Modal Editar Asistencia -->
+            <div id="modalEditarAsistencia" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalEditarAsistencia()">&times;</span>
+                    <h3>Editar Asistencia del Estudiante</h3>
+                    <p id="nombreEstudianteAsis"></p>
+                    <input type="hidden" id="editAsisIdDetalle">
+                    
+                    <p>Nota: Modifique los valores según corresponda</p>
+                    <div class="form-grid">
+                        <input type="number" id="editAsisPresentes" class="input" placeholder="Presentes" min="0">
+                        <input type="number" id="editAsisAusentes" class="input" placeholder="Ausentes" min="0">
+                        <input type="number" id="editAsisTardanzas" class="input" placeholder="Tardanzas" min="0">
+                    </div>
+                    
+                    <button onclick="actualizarAsistencia()">Guardar Cambios</button>
+                </div>
+            </div>
         </section>
 
         <!-- OBSERVACIONES -->
         <section id="observaciones" class="seccion">
             <h1>Observaciones Académicas y Conductuales</h1>
             
-            <div class="filtros-obs">
-                <select id="selectTipoObs" class="input">
-                    <option value="">Todas</option>
-                    <option value="academica">Académicas</option>
-                    <option value="conductual">Conductuales</option>
-                </select>
-                <button onclick="cargarObservaciones()">Filtrar</button>
+            <div class="filtros-container">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="filtros-grid">
+                    <select id="selectPeriodoObs" class="input" onchange="cargarCursosParalelosObs()">
+                        <option value="">Seleccione período</option>
+                    </select>
+                    <select id="selectCursoParaleloObs" class="input" onchange="cargarAsignaturasObs()">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                    <select id="selectAsignaturaObs" class="input" onchange="cargarObservaciones()">
+                        <option value="">Seleccione asignatura</option>
+                    </select>
+                    <select id="selectTipoObs" class="input" onchange="cargarObservaciones()">
+                        <option value="">Todos los tipos</option>
+                        <option value="academica">Académicas</option>
+                        <option value="conductual">Conductuales</option>
+                    </select>
+                </div>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Estudiante</th>
-                        <th>Materia</th>
-                        <th>Docente</th>
-                        <th>Tipo</th>
-                        <th>Detalle</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaObservaciones"></tbody>
-            </table>
+            <div class="card-section">
+                <h3>Lista de Observaciones</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Estudiante</th>
+                            <th>Materia</th>
+                            <th>Docente</th>
+                            <th>Tipo</th>
+                            <th>Detalle</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaObservaciones"></tbody>
+                </table>
+            </div>
+
+            <!-- Modal Editar Observación -->
+            <div id="modalEditarObservacion" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModalEditarObservacion()">&times;</span>
+                    <h3>Editar Observación</h3>
+                    <input type="hidden" id="editObsId">
+                    
+                    <select id="editObsTipo" class="input">
+                        <option value="academica">Académica</option>
+                        <option value="conductual">Conductual</option>
+                    </select>
+                    
+                    <textarea id="editObsDetalle" class="input" placeholder="Detalle de la observación" rows="5"></textarea>
+                    
+                    <select id="editObsEstado" class="input">
+                        <option value="abierta">Abierta</option>
+                        <option value="cerrada">Cerrada</option>
+                    </select>
+                    
+                    <button onclick="actualizarObservacion()">Guardar Cambios</button>
+                </div>
+            </div>
         </section>
 
         <!-- ALERTAS -->
         <section id="alertas" class="seccion">
             <h1>Alertas Automáticas</h1>
             
+            <div class="filtros-container">
+                <h3>Filtros de Búsqueda</h3>
+                <div class="filtros-grid">
+                    <select id="selectPeriodoAlertas" class="input" onchange="cargarCursosParalelosAlertas()">
+                        <option value="">Seleccione período</option>
+                    </select>
+                    <select id="selectCursoParaleloAlertas" class="input" onchange="cargarAsignaturasAlertas()">
+                        <option value="">Seleccione curso-paralelo</option>
+                    </select>
+                    <select id="selectAsignaturaAlertas" class="input" onchange="cargarAlertas()">
+                        <option value="">Todas las asignaturas</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="grid">
                 <div class="card">
                     <h3>Bajo Rendimiento</h3>
@@ -218,12 +544,16 @@
         <!-- PERFIL -->
         <section id="perfil" class="seccion">
             <h1>Mi Perfil</h1>
+            <p>UUID: <strong id="perfilUUID"></strong></p>
             <p>Nombre: <strong id="perfilNombre"></strong></p>
             <p>Correo: <strong id="perfilCorreo"></strong></p>
             <p>Rol: <strong>Director Académico</strong></p>
         </section>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="director.js"></script>
 </body>
 </html>

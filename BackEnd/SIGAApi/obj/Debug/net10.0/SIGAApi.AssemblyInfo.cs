@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SIGAApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53e918927900dafc2a916b2fe2944e111100bbf9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de371e7549b748525abfb8653ff53cb59e073375")]
 [assembly: System.Reflection.AssemblyProductAttribute("SIGAApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SIGAApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
